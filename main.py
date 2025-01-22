@@ -4,6 +4,8 @@ import requests
 import time
 import os
 from dotenv import load_dotenv
+from db import add_crypto, update_crypto, get_all, get_crypto
+
 
 
 # email config
@@ -12,14 +14,7 @@ EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
 TO_EMAIL = os.getenv('TO_EMAIL') # could be same as EMAIL_ADDRESS
 
-# crypo api config
 API_KEY = os.getenv('API_KEY')
-
-COIN_IDS = {
-    "bitcoin": "BTC",
-    "ethereum": "ETH",
-    "ripple": "XRP",
-} 
 
 
 def send_email(subject, body):
@@ -42,13 +37,13 @@ def get_price(symbol):
         "accept": "application/json",
         "x-cg-demo-api-key": API_KEY
     }
-
     response = requests.get(url, headers=headers)
 
     return response.json()[symbol]["usd"]
 
 
 if __name__ == "__main__":
-    for key in COIN_IDS:
-        print(get_price(key))
-        time.sleep(5)
+    print(get_all())
+    add_crypto("SOL", "solana")
+    update_crypto("SOL", get_price("solana"))
+    print(get_crypto("SOL"))
