@@ -17,7 +17,7 @@ def update_crypto(ticker, price):
 
 def get_crypto(ticker):
     cur.execute("SELECT * FROM cryptos WHERE ticker = ?", (ticker,))
-    return cur.fetchone()
+    return None if cur.rowcount == 0 else cur.fetchone()
 
 def get_all():
     cur.execute("SELECT * FROM cryptos")
