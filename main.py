@@ -63,6 +63,9 @@ def update_all():
 
         if price > old_prices[tickers.index(ticker)] * (1 + PERCENT_THRESHOLD / 100):
             send_email(f"{ticker} Alert", f"{ticker} has increased by more than {PERCENT_THRESHOLD}% in the last hour.")
+        elif price < old_prices[tickers.index(ticker)] * (1 - PERCENT_THRESHOLD / 100):
+            send_email(f"{ticker} Alert", f"{ticker} has decreased by more than {PERCENT_THRESHOLD}% in the last hour.")
+
 
 
 
